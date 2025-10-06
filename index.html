@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kanavahaku SPA</title>
+  <title>Kanavahaku</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
@@ -14,7 +14,7 @@
     <div class="header-right">
       <div class="tabs">
         <div class="tab active" data-page="kanavahaku">Kanavahaku</div>
-        <div class="tab" data-page="ohjeet">Ohjeet</div>
+        <div class="tab" data-page="ohjeet">Tietopankki</div>
       </div>
       <button id="theme-toggle" title="Vaihda teema">
         <i class="fa-solid fa-moon"></i>
@@ -27,7 +27,7 @@
       <div class="dropdown-container">
         <label for="municipality-select">Valitse kunta:</label>
         <select id="municipality-select">
-          <option value="">-- Valitse kunta --</option>
+          <option value="">Ladataan...</option>
         </select>
       </div>
 
@@ -37,10 +37,11 @@
 
     <section id="ohjeet" class="tab-content">
       <h2>Ohjeet</h2>
-      <p>Valitse haluamasi kunta, niin näet alueen radiokanavat ja taajuudet.</p>
+      <div id="help-list"></div>
     </section>
   </main>
 
+  <script src="assets/js/help-topics.js"></script>
   <script src="assets/js/station-websites.js"></script>
   <script src="assets/js/script.js"></script>
 </body>

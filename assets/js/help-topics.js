@@ -1,0 +1,51 @@
+window.helpTopics = [
+  {
+    question: "Perustiedot sovelluksesta",
+    answer: `Tämä sovellus listaa kaikki tällä hetkellä Suomessa toimivat radioasemat kunnittain. Data haetaan Traficomin avoimen datan lähteestä. Mikäli asemalla on voimassa oleva toimilupa, sen pitäisi listautua tälle sivustolle. Samaan tyyliin mikäli radioaseman toimilupa on päättynyt, se poistuu automaattisesti myös tästä sovelluksesta.
+    Sovellus listaa ainoastaan FM-radioasemat. Keskiaalto- (AM) ja lyhytaaltoasemia ei listata, sillä näiden käyttö Suomessa on hyvin minimaalista.
+    <br><br>
+    Pysyvien radioasemien logot ja kotisivujen linkit on syötetty manuaalisesti sovellukseen.
+    Uusilta sekä väliaikaisesti toimivilta radioasemilta nämä voivat mahdollisesti puuttua.
+    Myös mahdolliset brändiuudistukset eivät päivity automaattisesti tähän sovellukseen.
+    Logot ja linkit ovat viimeksi päivitetty 6.10.2025, jolloin kaikille (myös tilapäisille) radioasemille nämä tiedot syötettiin, mikäli sellaisia oli saatavilla.
+    <br><br>
+    Voit halutessasi lukea lisää API-rajapinnasta seuraavista linkeistä:
+    <br>
+    <a href="https://tieto.traficom.fi/fi/tietotraficom/avoin-data?toggle=Taajuudet" target="_blank">Tieto.Traficom</a>
+    <br>
+    <a href="https://opendata.traficom.fi/swagger/ui/index#/Radioasematiedot" target="_blank">Traficom Avoin Data API V13 (Swagger)</a>
+    <br><br>
+    Kaikki kanavien logot ja brändielementit ovat niiden omistajien tekijänoikeuden alaista materiaalia. Tätä sivustoa käytetään vain tiedon esittelyyn, eikä sillä ole kaupallista tarkoitusta tai lupaa käyttää logoja muuhun toimintaan.`
+  },
+  {
+    question: "Miten vaihdan teeman?",
+    answer: "Sovellus valitsee teeman automaattisesti laitteen preferenssien mukaisesti. Halutessasi voit vaihtaa tummaan tai vaaleaan teemaan painamalla sivuston oikeasta yläkulmasta löytyvää kuu/aurinko-painiketta. Valinta tallentuu evästeisiin."
+  },
+  {
+    question: "Miksi kanava kuuluu paikassa X, mutta ei paikassa Y?",
+    answer: `Radiotaajuuksia on saatavilla rajoitetusti välillä 87.5 - 107.9 MHz. Usein suosituimmissa kaupungeissa, kuten Helsingissä, taajuudet ovat erittäin kovalla käytöllä eikä kaikille toimijoille välttämättä ole tilaa saapua alueelle, vaikka halua olisi.
+    <br><br>
+    Toisaalta taas syrjäseuduilla, kuten pohjoisimmassa Lapissa, taajuuksia olisi reilusti saatavilla, mutta nämä eivät radioyhtiöitä kiinnosta vähäisten kuuntelijamäärien vuoksi.
+    Kulut kanavan pyörittämiseen kasvavat sitä mukaa, mitä laajemmalla alueella kanava kuuluu.
+    <br><br>
+    Kaupallisista radiokanavista mikään ei kuulu koko maan laajuisesti, mutta Yleisradion kanavat Yle Radio Suomi, Yle Radio 1 sekä YleX kuuluvat joka paikassa, missä asutusta on.`
+  },
+  {
+    question: "Kuntaa ei ole listauksessa / Kunnastani puuttuu radiokanavia",
+    answer: `Kuntalistaus tulee Traficomilta ja listauksessa ovat kaikki ne kunnat, joista löytyy tällä hetkellä radiolähetin.
+    Jos kuntaasi ei löydy listauksesta, valitse seuraavaksi lähin kunta mikä löytyy.
+    Monissa tapauksissa lähettimen signaali kantaa vähintään useiden kymmenien kilometrien päähän, ääritapauksissa jopa sadan kilometrin päähän.
+    Esimerkiksi Vantaalla ei ole omaa lähetintä, mutta Helsingin ja Espoon signaali kantaa helposti myös Vantaalle asti.
+    <br><br>
+    Jos radioasema puuttuu listauksesta, mutta tiedät että sellainen pitäisi olla olemassa, tarkista myös lähikuntien lähettimet.
+    Esimerkkinä jälleen pääkaupunkiseutu: Espoon asemat kuuluvat myös lähikunnissa, joten erillinen lähetin esimerkiksi Helsingissä on tarpeeton.
+    <br><br>
+    Jos radioasemaa ei löydy edes lähikuntien listauksista, voi kyseessä olla ilman toimilupaa lähettävä radio, eli ns. <a href="https://fi.wikipedia.org/wiki/Piraattiradio">piraattiradio</a>. Tällaiset ovat kuitenkin olleet Suomessa hyvin harvinaisia.`
+  },
+  {
+    question: `Miten "tilapäinen" ja "pysyvä" radiokanava eroavat toisistaan?`,
+    answer: `Tilapäinen radiokanava toimii nimensä mukaisesti tilapäisellä radioluvalla, ilman erillistä ohjelmistotoimilupaa. Traficom myöntää tilapäisiä radiolupia enintään kolmeksi kuukaudeksi. Kahden perättäisen lupakauden välissä pitää olla vähintään kahden kuukauden tauko. Tilapäisillä radioluvilla toimivat esimerkiksi harrastajat, opiskelijaradiot, kesäradiot, raviradiot sekä Puolustusvoimat harjoituksineen.
+    <br><br>
+    Pysyvällä radiokanavalla on voimassa oleva ohjelmistotoimilupa ja nämä ovat usein isompien radioyhtiöiden toimintaa. Pysyvät luvat eivät nimestään huolimatta ole pysyviä, vaan ne myönnetään aina kymmeneksi vuodeksi kerrallaan. Nykyinen toimilupakausi päättyy <b>31.12.2029</b>, minkä jälkeen taajuudet jaetaan uudelleen.`
+  }
+];

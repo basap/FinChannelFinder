@@ -53,9 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-    if (!getCookie('theme')) {
-      applyTheme(e.matches ? 'dark' : 'light');
-    }
+    if (!getCookie('theme')) applyTheme(e.matches ? 'dark' : 'light');
   });
 
   function getStationLogo(stationName) {
@@ -86,7 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
       municipalitySelect.innerHTML = `<option value="">Virhe haettaessa kuntia</option>`;
     }
   }
-
   populateMunicipalities();
 
   municipalitySelect.addEventListener("change", async (e) => {
@@ -99,11 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const url = `https://corsproxy.io/?https://opendata.traficom.fi/api/v13/Radioasematiedot?$filter=Municipality%20eq%20'${encodeURIComponent(selected)}'`;
       const response = await fetch(url);
       if (!response.ok) throw new Error(`Virheellinen vastaus (${response.status})`);
-
       const data = await response.json();
       let stations = data.value || [];
 
-      stations = stations.filter(station => (station.Frequency / 1_000_000) >= 88.0);
+      stations = stations.filter(s => (s.Frequency / 1_000_000) >= 87.6);
 
       const uniqueStations = [];
       const seen = new Set();
@@ -120,37 +116,89 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      const temporaryStations = uniqueStations.filter(s => s.StartingDate !== null);
+      const permanentStations = uniqueStations.filter(s => s.StartingDate === null);
+
       stationList.innerHTML = "";
 
-      uniqueStations.forEach(station => {
-      const frequencyMHz = (station.Frequency / 1_000_000).toFixed(1);
-      const normalizedName = station.StationName.toLowerCase().replace(/\s+/g, '');
-      const website = stationWebsites[normalizedName];
-        
-      const div = document.createElement("div");
-      div.className = "station-box";
-      div.innerHTML = `
+      function createStationBox(station) {
+        const frequencyMHz = (station.Frequency / 1_000_000).toFixed(1);
+        const normalizedName = station.StationName.toLowerCase().replace(/\s+/g, '');
+        const website = stationWebsites[normalizedName];
+
+        const div = document.createElement("div");
+        div.className = "station-box";
+        div.innerHTML = `
           <div class="station-logo">
-          <img src="${getStationLogo(station.StationName)}" 
-              alt="${station.StationName} logo" 
-              onerror="this.src='assets/img/logos/default.png'" />
+            <img src="${getStationLogo(station.StationName)}" 
+                 alt="${station.StationName} logo" 
+                 onerror="this.src='assets/img/logos/default.png'" />
           </div>
           <div class="station-separator"></div>
           <div class="station-info">
-          <div class="station-name">${station.StationName}</div>
-          <div class="station-frequency">${frequencyMHz} MHz</div>
-          <button 
+            <div class="station-name">${station.StationName}</div>
+            <div class="station-frequency">${frequencyMHz} MHz</div>
+            <button 
               ${website ? `onclick="window.open('${website}', '_blank')"` : 'disabled'} 
               class="${website ? 'btn-active' : 'btn-disabled'}">
               ${website ? 'Kotisivut' : 'Ei kotisivuja'}
-          </button>
+            </button>
           </div>
-      `;
-      stationList.appendChild(div);
-      });
+        `;
+        return div;
+      }
+
+      function renderSection(title, stations) {
+        if (stations.length === 0) return;
+        const group = document.createElement("div");
+        group.className = "station-group";
+        group.innerHTML = `<h3>${title}</h3><div class="station-section"></div>`;
+        const section = group.querySelector(".station-section");
+        stations.forEach(station => section.appendChild(createStationBox(station)));
+        stationList.appendChild(group);
+      }
+
+      renderSection("Tilapäiset radiokanavat", temporaryStations);
+      renderSection("Pysyvät radiokanavat", permanentStations);
+
+      if (temporaryStations.length === 0 && permanentStations.length === 0) {
+        stationList.innerHTML = `<p>Ei näytettäviä asemia kunnalle ${selected}.</p>`;
+      }
+
     } catch (err) {
       console.error(err);
       stationList.innerHTML = `<p>Virhe haettaessa tietoja: ${err.message}</p>`;
     }
   });
+
+  function populateHelpTopics() {
+    const helpList = document.getElementById('help-list');
+    if (!helpList || !window.helpTopics) return;
+
+    helpList.innerHTML = "";
+
+    helpTopics.forEach(topic => {
+      const topicDiv = document.createElement("div");
+      topicDiv.className = "help-topic";
+
+      const questionDiv = document.createElement("div");
+      questionDiv.className = "help-question";
+      questionDiv.textContent = topic.question;
+
+      const answerDiv = document.createElement("div");
+      answerDiv.className = "help-answer";
+      answerDiv.innerHTML = topic.answer;
+      answerDiv.style.display = "none";
+
+      questionDiv.addEventListener("click", () => {
+        answerDiv.style.display = answerDiv.style.display === "none" ? "block" : "none";
+      });
+
+      topicDiv.appendChild(questionDiv);
+      topicDiv.appendChild(answerDiv);
+      helpList.appendChild(topicDiv);
+    });
+  }
+
+  populateHelpTopics();
 });
