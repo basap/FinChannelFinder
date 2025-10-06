@@ -87,24 +87,37 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!response.ok) throw new Error(`Virheellinen vastaus (${response.status})`);
 
       const data = await response.json();
-      const stations = data.value || [];
+      let stations = data.value || [];
 
-      if (stations.length === 0) {
+      stations = stations.filter(station => (station.Frequency / 1_000_000) >= 88.0);
+
+      const uniqueStations = [];
+      const seen = new Set();
+      stations.forEach(station => {
+        const key = station.StationName + "_" + (station.Frequency / 1_000_000).toFixed(1);
+        if (!seen.has(key)) {
+          seen.add(key);
+          uniqueStations.push(station);
+        }
+      });
+
+      if (uniqueStations.length === 0) {
         stationList.innerHTML = `<p>Ei löytynyt asemia kunnalle ${selected}.</p>`;
         return;
       }
 
       stationList.innerHTML = "";
 
-      stations.forEach(station => {
+      uniqueStations.forEach(station => {
         const frequencyMHz = (station.Frequency / 1_000_000).toFixed(1);
+
         const div = document.createElement("div");
         div.className = "station-box";
         div.innerHTML = `
           <div class="station-logo">
             <img src="${getStationLogo(station.StationName)}" 
                  alt="${station.StationName} logo" 
-                 onerror="this.src='/assets/img/logos/default.png'" />
+                 onerror="this.src='assets/img/logos/default.png'" />
           </div>
           <div class="station-separator"></div>
           <div class="station-info">
