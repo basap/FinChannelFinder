@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-
       Object.keys(sections).forEach(key => {
         sections[key].style.display = key === tab.dataset.page ? 'block' : 'none';
       });
@@ -71,6 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
     municipalitySelect.appendChild(option);
   });
 
+  function getStationLogo(stationName) {
+    const fileName = stationName.toLowerCase().replace(/\s+/g, '') + '.png';
+    return `assets/img/logos/${fileName}`;
+  }
+
   municipalitySelect.addEventListener("change", async (e) => {
     const selected = e.target.value;
     if (!selected) return;
@@ -78,45 +82,42 @@ document.addEventListener('DOMContentLoaded', () => {
     stationList.innerHTML = `<p>Ladataan radiokanavia...</p>`;
 
     try {
-      const response = await fetch("https://corsproxy.io/?https://opendata.traficom.fi/api/v13/Radioasematiedot");
+      const url = `https://corsproxy.io/?https://opendata.traficom.fi/api/v13/Radioasematiedot?$filter=Municipality%20eq%20'${encodeURIComponent(selected)}'`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Virheellinen vastaus (${response.status})`);
+
       const data = await response.json();
+      const stations = data.value || [];
 
-      const filtered = data.value.filter(
-        station => station.Municipality.toLowerCase() === selected.toLowerCase()
-      );
-
-      if (filtered.length === 0) {
+      if (stations.length === 0) {
         stationList.innerHTML = `<p>Ei löytynyt asemia kunnalle ${selected}.</p>`;
         return;
       }
 
       stationList.innerHTML = "";
-      filtered.forEach(station => {
+
+      stations.forEach(station => {
+        const frequencyMHz = (station.Frequency / 1_000_000).toFixed(1);
         const div = document.createElement("div");
         div.className = "station-box";
         div.innerHTML = `
-          <div class="station-logo"><i class="fa-solid fa-radio"></i></div>
-          <h3>${station.StationName}</h3>
-          <p>${station.Frequency} MHz</p>
+          <div class="station-logo">
+            <img src="${getStationLogo(station.StationName)}" 
+                 alt="${station.StationName} logo" 
+                 onerror="this.src='/assets/img/logos/default.png'" />
+          </div>
+          <div class="station-separator"></div>
+          <div class="station-info">
+            <div class="station-name">${station.StationName}</div>
+            <div class="station-frequency">${frequencyMHz} MHz</div>
+            <button disabled>Sivusto</button>
+          </div>
         `;
         stationList.appendChild(div);
       });
     } catch (err) {
+      console.error(err);
       stationList.innerHTML = `<p>Virhe haettaessa tietoja: ${err.message}</p>`;
     }
   });
-});
-
-stations.forEach(station => {
-  const div = document.createElement("div");
-  div.className = "station-box";
-  div.innerHTML = `
-    <div class="station-logo"><i class="fa-solid fa-radio"></i></div>
-    <div class="station-info">
-      <h3>${station.StationName}</h3>
-      <p>${station.Frequency} MHz</p>
-      <button disabled>Sivusto</button>
-    </div>
-  `;
-  stationList.appendChild(div);
 });
