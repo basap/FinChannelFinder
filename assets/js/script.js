@@ -58,22 +58,36 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  const municipalities = [
-    "Helsinki", "Espoo", "Vantaa", "Turku", "Tampere", "Oulu",
-    "Jyväskylä", "Kuopio", "Lahti", "Pori", "Joensuu", "Rovaniemi"
-  ];
-
-  municipalities.forEach(name => {
-    const option = document.createElement("option");
-    option.value = name;
-    option.textContent = name;
-    municipalitySelect.appendChild(option);
-  });
-
   function getStationLogo(stationName) {
     const fileName = stationName.toLowerCase().replace(/\s+/g, '') + '.png';
     return `assets/img/logos/${fileName}`;
   }
+
+  async function populateMunicipalities() {
+    try {
+      const url = `https://corsproxy.io/?https://opendata.traficom.fi/api/v13/Radioasematiedot`;
+      const response = await fetch(url);
+      if (!response.ok) throw new Error(`Virheellinen vastaus (${response.status})`);
+      const data = await response.json();
+      const allStations = data.value || [];
+
+      const municipalitiesSet = new Set(allStations.map(s => s.Municipality).filter(Boolean));
+      const municipalities = Array.from(municipalitiesSet).sort();
+
+      municipalitySelect.innerHTML = `<option value="">Valitse kunta</option>`;
+      municipalities.forEach(name => {
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        municipalitySelect.appendChild(option);
+      });
+    } catch (err) {
+      console.error("Kuntien haku epäonnistui:", err);
+      municipalitySelect.innerHTML = `<option value="">Virhe haettaessa kuntia</option>`;
+    }
+  }
+
+  populateMunicipalities();
 
   municipalitySelect.addEventListener("change", async (e) => {
     const selected = e.target.value;
@@ -109,24 +123,30 @@ document.addEventListener('DOMContentLoaded', () => {
       stationList.innerHTML = "";
 
       uniqueStations.forEach(station => {
-        const frequencyMHz = (station.Frequency / 1_000_000).toFixed(1);
-
-        const div = document.createElement("div");
-        div.className = "station-box";
-        div.innerHTML = `
+      const frequencyMHz = (station.Frequency / 1_000_000).toFixed(1);
+      const normalizedName = station.StationName.toLowerCase().replace(/\s+/g, '');
+      const website = stationWebsites[normalizedName];
+        
+      const div = document.createElement("div");
+      div.className = "station-box";
+      div.innerHTML = `
           <div class="station-logo">
-            <img src="${getStationLogo(station.StationName)}" 
-                 alt="${station.StationName} logo" 
-                 onerror="this.src='assets/img/logos/default.png'" />
+          <img src="${getStationLogo(station.StationName)}" 
+              alt="${station.StationName} logo" 
+              onerror="this.src='assets/img/logos/default.png'" />
           </div>
           <div class="station-separator"></div>
           <div class="station-info">
-            <div class="station-name">${station.StationName}</div>
-            <div class="station-frequency">${frequencyMHz} MHz</div>
-            <button disabled>Sivusto</button>
+          <div class="station-name">${station.StationName}</div>
+          <div class="station-frequency">${frequencyMHz} MHz</div>
+          <button 
+              ${website ? `onclick="window.open('${website}', '_blank')"` : 'disabled'} 
+              class="${website ? 'btn-active' : 'btn-disabled'}">
+              ${website ? 'Kotisivut' : 'Ei kotisivuja'}
+          </button>
           </div>
-        `;
-        stationList.appendChild(div);
+      `;
+      stationList.appendChild(div);
       });
     } catch (err) {
       console.error(err);
