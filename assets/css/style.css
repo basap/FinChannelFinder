@@ -295,6 +295,16 @@ body.dark .station-info .btn-disabled {
   cursor: not-allowed;
 }
 
+.station-info .btn-ending {
+  background: #f9d71c;
+  color: #000;
+  cursor: default;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  padding: 0.5rem 0.8rem;
+}
+
 body.dark .station-section h2 {
   border-color: #555;
 }

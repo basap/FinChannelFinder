@@ -15,23 +15,23 @@ window.helpTopics = [
     <br>
     <a href="https://opendata.traficom.fi/swagger/ui/index#/Radioasematiedot" target="_blank">Traficom Avoin Data API V13 (Swagger)</a>
     <br><br>
-    Kaikki kanavien logot ja brändielementit ovat niiden omistajien tekijänoikeuden alaista materiaalia. Tätä sivustoa käytetään vain tiedon esittelyyn, eikä sillä ole kaupallista tarkoitusta tai lupaa käyttää logoja muuhun toimintaan.`
+    Kaikki asemien logot ja brändielementit ovat niiden omistajien tekijänoikeuden alaista materiaalia. Tätä sivustoa käytetään vain tiedon esittelyyn, eikä sillä ole kaupallista tarkoitusta tai lupaa käyttää logoja muuhun toimintaan.`
   },
   {
     question: "Miten vaihdan teeman?",
     answer: "Sovellus valitsee teeman automaattisesti laitteen preferenssien mukaisesti. Halutessasi voit vaihtaa tummaan tai vaaleaan teemaan painamalla sivuston oikeasta yläkulmasta löytyvää kuu/aurinko-painiketta. Valinta tallentuu evästeisiin."
   },
   {
-    question: "Miksi kanava kuuluu paikassa X, mutta ei paikassa Y?",
+    question: "Miksi asema kuuluu paikassa X, mutta ei paikassa Y?",
     answer: `Radiotaajuuksia on saatavilla rajoitetusti välillä 87.5 - 107.9 MHz. Usein suosituimmissa kaupungeissa, kuten Helsingissä, taajuudet ovat erittäin kovalla käytöllä eikä kaikille toimijoille välttämättä ole tilaa saapua alueelle, vaikka halua olisi.
     <br><br>
     Toisaalta taas syrjäseuduilla, kuten pohjoisimmassa Lapissa, taajuuksia olisi reilusti saatavilla, mutta nämä eivät radioyhtiöitä kiinnosta vähäisten kuuntelijamäärien vuoksi.
-    Kulut kanavan pyörittämiseen kasvavat sitä mukaa, mitä laajemmalla alueella kanava kuuluu.
+    Kulut aseman pyörittämiseen kasvavat sitä mukaa, mitä laajemmalla alueella asema kuuluu.
     <br><br>
-    Kaupallisista radiokanavista mikään ei kuulu koko maan laajuisesti, mutta Yleisradion kanavat Yle Radio Suomi, Yle Radio 1 sekä YleX kuuluvat joka paikassa, missä asutusta on.`
+    Kaupallisista radioasemista mikään ei kuulu koko maan laajuisesti, mutta Yleisradion asemat Yle Radio Suomi, Yle Radio 1 sekä YleX kuuluvat joka paikassa, missä asutusta on.`
   },
   {
-    question: "Kuntaa ei ole listauksessa / Kunnastani puuttuu radiokanavia",
+    question: "Kuntaa ei ole listauksessa / Kunnastani puuttuu radioasemia",
     answer: `Kuntalistaus tulee Traficomilta ja listauksessa ovat kaikki ne kunnat, joista löytyy tällä hetkellä radiolähetin.
     Jos kuntaasi ei löydy listauksesta, valitse seuraavaksi lähin kunta mikä löytyy.
     Monissa tapauksissa lähettimen signaali kantaa vähintään useiden kymmenien kilometrien päähän, ääritapauksissa jopa sadan kilometrin päähän.
@@ -43,9 +43,13 @@ window.helpTopics = [
     Jos radioasemaa ei löydy edes lähikuntien listauksista, voi kyseessä olla ilman toimilupaa lähettävä radio, eli ns. <a href="https://fi.wikipedia.org/wiki/Piraattiradio">piraattiradio</a>. Tällaiset ovat kuitenkin olleet Suomessa hyvin harvinaisia.`
   },
   {
-    question: `Miten "tilapäinen" ja "pysyvä" radiokanava eroavat toisistaan?`,
-    answer: `Tilapäinen radiokanava toimii nimensä mukaisesti tilapäisellä radioluvalla, ilman erillistä ohjelmistotoimilupaa. Traficom myöntää tilapäisiä radiolupia enintään kolmeksi kuukaudeksi. Kahden perättäisen lupakauden välissä pitää olla vähintään kahden kuukauden tauko. Tilapäisillä radioluvilla toimivat esimerkiksi harrastajat, opiskelijaradiot, kesäradiot, raviradiot sekä Puolustusvoimat harjoituksineen.
+    question: `Miten "tilapäinen" ja "pysyvä" radioasema eroavat toisistaan?`,
+    answer: `Tilapäinen radioasema toimii nimensä mukaisesti tilapäisellä radioluvalla, ilman erillistä ohjelmistotoimilupaa. Traficom myöntää tilapäisiä radiolupia enintään kolmeksi kuukaudeksi. Kahden perättäisen lupakauden välissä pitää olla vähintään kahden kuukauden tauko. Tilapäisillä radioluvilla toimivat esimerkiksi harrastajat, opiskelijaradiot, kesäradiot, raviradiot sekä Puolustusvoimat harjoituksineen.
     <br><br>
-    Pysyvällä radiokanavalla on voimassa oleva ohjelmistotoimilupa ja nämä ovat usein isompien radioyhtiöiden toimintaa. Pysyvät luvat eivät nimestään huolimatta ole pysyviä, vaan ne myönnetään aina kymmeneksi vuodeksi kerrallaan. Nykyinen toimilupakausi päättyy <b>31.12.2029</b>, minkä jälkeen taajuudet jaetaan uudelleen.`
+    Pysyvällä radioasemalla on voimassa oleva ohjelmistotoimilupa ja nämä ovat usein osa isompien radioyhtiöiden toimintaa. Pysyvät luvat eivät nimestään huolimatta ole pysyviä, vaan ne myönnetään aina kymmeneksi vuodeksi kerrallaan. Nykyinen toimilupakausi päättyy <b>31.12.2029</b>, minkä jälkeen taajuudet jaetaan uudelleen.`
+  },
+  {
+    question: `Radioaseman taajuudella ei kuulu mitään`,
+    answer: `Hakukone listaa asemat myönnettyjen toimilupien perusteella, mutta tämä ei takaa sitä, että asemalla välttämättä olisi lähetys käynnissä. Esimerkiksi raviradiot harvemmin lähettävät ohjelmaa ravien ulkopuolella. Kyseessä voi olla myös tilapäinen häiriö aseman lähetysvirrassa. Teoriassa saattaa olla myös mahdollisuus siihen, että taajuus on syötetty väärin Traficomin järjestelmään, mutta tämä on hyvin epätodennäköinen skenaario, jos ei mahdoton.`
   }
 ];

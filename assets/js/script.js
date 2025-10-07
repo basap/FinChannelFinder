@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabs = document.querySelectorAll('.tab');
   const sections = {
     kanavahaku: document.getElementById('kanavahaku'),
+    televisio: document.getElementById('televisio'),
     ohjeet: document.getElementById('ohjeet')
   };
   const themeToggle = document.getElementById('theme-toggle');
@@ -69,7 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await response.json();
       const allStations = data.value || [];
 
-      const municipalitiesSet = new Set(allStations.map(s => s.Municipality).filter(Boolean));
+      const municipalitiesSet = new Set(
+        allStations
+          .map(s => s.Municipality)
+          .filter(name => name && !municipalityBlacklist.includes(name))
+      );
+
       const municipalities = Array.from(municipalitiesSet).sort();
 
       municipalitySelect.innerHTML = `<option value="">Valitse kunta</option>`;
@@ -116,37 +122,58 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const temporaryStations = uniqueStations.filter(s => s.StartingDate !== null);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const temporaryStations = uniqueStations.filter(station => {
+      if (station.StartingDate === null) return false;
+      if (!station.EndingDate) return true;
+      const endDate = new Date(station.EndingDate);
+      endDate.setHours(0, 0, 0, 0);
+      return endDate >= today;
+      });
+
       const permanentStations = uniqueStations.filter(s => s.StartingDate === null);
 
       stationList.innerHTML = "";
 
-      function createStationBox(station) {
+        function createStationBox(station) {
         const frequencyMHz = (station.Frequency / 1_000_000).toFixed(1);
         const normalizedName = station.StationName.toLowerCase().replace(/\s+/g, '');
         const website = stationWebsites[normalizedName];
 
         const div = document.createElement("div");
         div.className = "station-box";
+
+        let endingButtonHTML = "";
+        if (station.StartingDate !== null && station.EndingDate) {
+            const endDate = new Date(station.EndingDate);
+            const formattedDate = `${endDate.getDate()}.${endDate.getMonth() + 1}.${endDate.getFullYear()}`;
+            endingButtonHTML = `<button class="btn-ending" disabled>${formattedDate} asti</button>`;
+        }
+
         div.innerHTML = `
-          <div class="station-logo">
+            <div class="station-logo">
             <img src="${getStationLogo(station.StationName)}" 
-                 alt="${station.StationName} logo" 
-                 onerror="this.src='assets/img/logos/default.png'" />
-          </div>
-          <div class="station-separator"></div>
-          <div class="station-info">
+                alt="${station.StationName} logo" 
+                onerror="this.src='assets/img/logos/default.png'" />
+            </div>
+            <div class="station-separator"></div>
+            <div class="station-info">
             <div class="station-name">${station.StationName}</div>
             <div class="station-frequency">${frequencyMHz} MHz</div>
-            <button 
-              ${website ? `onclick="window.open('${website}', '_blank')"` : 'disabled'} 
-              class="${website ? 'btn-active' : 'btn-disabled'}">
-              ${website ? 'Kotisivut' : 'Ei kotisivuja'}
-            </button>
-          </div>
+            <div style="display:flex; gap:0.5rem; margin-top:0.3rem;">
+                <button 
+                ${website ? `onclick="window.open('${website}', '_blank')"` : 'disabled'} 
+                class="${website ? 'btn-active' : 'btn-disabled'}">
+                ${website ? 'Kotisivut' : 'Ei kotisivuja'}
+                </button>
+                ${endingButtonHTML}
+            </div>
+            </div>
         `;
         return div;
-      }
+        }
 
       function renderSection(title, stations) {
         if (stations.length === 0) return;

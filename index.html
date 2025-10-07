@@ -13,7 +13,8 @@
     <h1>Kanavahaku</h1>
     <div class="header-right">
       <div class="tabs">
-        <div class="tab active" data-page="kanavahaku">Kanavahaku</div>
+        <div class="tab active" data-page="kanavahaku">Radioasemat</div>
+        <div class="tab" data-page="televisio">Antennitelevisio</div>
         <div class="tab" data-page="ohjeet">Tietopankki</div>
       </div>
       <button id="theme-toggle" title="Vaihda teema">
@@ -35,6 +36,19 @@
       </div>
     </section>
 
+    <section id="televisio" class="tab-content" style="display: none;">
+      <div class="dropdown-container">
+        <label for="tv-municipality-select">Valitse kunta:</label>
+        <select id="tv-municipality-select">
+          <option value="">Valitse kunta</option>
+        </select>
+      </div>
+
+      <div id="tv-stations-container">
+        <p>Ladataan TV-asemia...</p>
+      </div>
+    </section>
+
     <section id="ohjeet" class="tab-content">
       <h2>Ohjeet</h2>
       <div id="help-list"></div>
@@ -43,6 +57,9 @@
 
   <script src="assets/js/help-topics.js"></script>
   <script src="assets/js/station-websites.js"></script>
+  <script src="assets/js/blacklist.js"></script>
+  <script type="module" src="assets/js/muxChannels.js"></script>
+  <script type="module" src="assets/js/tvStations.js"></script>
   <script src="assets/js/script.js"></script>
 </body>
 </html>
