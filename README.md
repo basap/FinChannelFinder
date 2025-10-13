@@ -18,6 +18,9 @@ All station logos and branding elements are the copyrighted property of their re
 
 [basap.github.io](https://basap.github.io/FinChannelFinder)
 
+> [!WARNING]  
+> If you check multiple municipalities too frequently, you might get timed out by the API. If this happens, just wait a few seconds or minutes and it should start working again.
+
 
 ## Traficom's API
 
