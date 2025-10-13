@@ -58,5 +58,16 @@ const municipalityBlacklist = [
   "Kronoby",
   "Larsmo",
   "Lojo",
-  "Vörå"
+  "Vörå",
+  "Gustav Adolfs",
+  "Gustavs",
+  "Kaskö",
+  "Kuhmois",
+  "Laukas",
+  "Malax",
+  "Pargas",
+  "Sibbo",
+  "Vanda",
+  "Vemo",
+  "Virdois"
 ];

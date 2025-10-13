@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const selected = e.target.value;
     if (!selected) return;
 
-    stationList.innerHTML = `<p>Ladataan radiokanavia...</p>`;
+    stationList.innerHTML = `<p>Ladataan radioasemia...</p>`;
 
     try {
       const url = `https://corsproxy.io/?https://opendata.traficom.fi/api/v13/Radioasematiedot?$filter=Municipality%20eq%20'${encodeURIComponent(selected)}'`;
@@ -126,11 +126,20 @@ document.addEventListener('DOMContentLoaded', () => {
       today.setHours(0, 0, 0, 0);
 
       const temporaryStations = uniqueStations.filter(station => {
-      if (station.StartingDate === null) return false;
-      if (!station.EndingDate) return true;
-      const endDate = new Date(station.EndingDate);
-      endDate.setHours(0, 0, 0, 0);
-      return endDate >= today;
+        if (station.StartingDate === null) return false;
+
+        const startDate = new Date(station.StartingDate);
+        startDate.setHours(0, 0, 0, 0);
+
+        if (startDate > today) return false;
+
+        if (station.EndingDate) {
+          const endDate = new Date(station.EndingDate);
+          endDate.setHours(0, 0, 0, 0);
+          if (endDate < today) return false;
+        }
+
+        return true;
       });
 
       const permanentStations = uniqueStations.filter(s => s.StartingDate === null);
@@ -185,8 +194,8 @@ document.addEventListener('DOMContentLoaded', () => {
         stationList.appendChild(group);
       }
 
-      renderSection("Tilapäiset radiokanavat", temporaryStations);
-      renderSection("Pysyvät radiokanavat", permanentStations);
+      renderSection("Tilapäiset radioasemat", temporaryStations);
+      renderSection("Pysyvät radioasemat", permanentStations);
 
       if (temporaryStations.length === 0 && permanentStations.length === 0) {
         stationList.innerHTML = `<p>Ei näytettäviä asemia kunnalle ${selected}.</p>`;
@@ -215,10 +224,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const answerDiv = document.createElement("div");
       answerDiv.className = "help-answer";
       answerDiv.innerHTML = topic.answer;
-      answerDiv.style.display = "none";
 
       questionDiv.addEventListener("click", () => {
-        answerDiv.style.display = answerDiv.style.display === "none" ? "block" : "none";
+        topicDiv.classList.toggle("active");
       });
 
       topicDiv.appendChild(questionDiv);

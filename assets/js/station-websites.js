@@ -91,5 +91,6 @@ const stationWebsites = {
   "yleradiovega": "https://areena.yle.fi/podcastit/ohjelmat/57-P3mO0mdm6",
   "ylesamiradio": "https://areena.yle.fi/podcastit/ohjelmat/57-bN8gjw7AY",
   "ylex": "https://areena.yle.fi/podcastit/ohjelmat/57-JAprnp7W2",
-  "ylex3m": "https://areena.yle.fi/podcastit/ohjelmat/57-md5vJP6a2"
+  "ylex3m": "https://areena.yle.fi/podcastit/ohjelmat/57-md5vJP6a2",
+  "jouluradio2025": "https://jouluradio.fi"
 };

@@ -5,7 +5,7 @@ export const muxChannels = {
     { name: "MTV3", number: 3, logo: "assets/img/tv/mtv3.png", website: "https://mtv.fi" },
     { name: "Nelonen", number: 4, logo: "assets/img/tv/nelonen.png", website: "https://nelonen.fi" },
     { name: "Yle Teema & Fem", number: 5, logo: "assets/img/tv/yle-teema.png", website: "https://areena.yle.fi/tv/ohjelmat/57-P3KPnajKD" },
-    { name: "OnniTV", number: 36, logo: "assets/img/tv/onnitv.png", website: "https://onnitv.fi" }
+    { name: "OnniTV", number: 36, logo: "assets/img/tv/onnitv.png", website: "https://onnitv.fi", info: `Kanava näkyy ainoastaan seuraavissa maakunnissa (tilanne lokakuu 2025): <ul><li>Etelä-Pohjanmaa</li><li>Keski-Pohjanmaa</li><li>Lappi</li><li>Pohjanmaa</li><li>Pohjois-Karjala</li><li>Pohjois-Pohjanmaa</li><li>Satakunta</li></ul>` }
   ],
   "Mux-C": [
     { name: "TV5", number: 7, logo: "assets/img/tv/tv5.png", website: "https://hbomax.com/fi/fi" },
@@ -14,7 +14,7 @@ export const muxChannels = {
     { name: "STAR Channel", number: 12, logo: "assets/img/tv/starchannel.png", website: "https://starchannel.fi" },
     { name: "Frii", number: 15, logo: "assets/img/tv/frii.png", website: "https://hbomax.com/fi/fi" },
     { name: "National Geographic", number: 17, logo: "assets/img/tv/natgeo.png", website: "https://natgeotv.com/fi" },
-    { name: "Viaplay TV", number: "tuntematon", logo: "assets/img/tv/viaplay.png", website: "https://viaplay.fi" }
+    { name: "Viaplay TV", number: 21, logo: "assets/img/tv/viaplay.png", website: "https://viaplay.fi", info: `Kanava aloittaa lähetykset 6.11.2025.<br><br>Lähetysajat ovat:<ul><li>Arkisin klo 14-24</li><li>Viikonloppuisin klo 10-24</li></ul>` }
   ],
   "Mux-E": [
     { name: "MTV Sub", number: 6, logo: "assets/img/tv/sub.png", website: "https://mtv.fi" },
