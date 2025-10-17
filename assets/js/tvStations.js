@@ -1,3 +1,5 @@
+// JAVASCRIPT: Televisiokanavat
+// Tuodaan muxChannels.js, johon syötetty televisiokanavat kanavanippujen mukaan
 import { muxChannels } from "./muxChannels.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -5,9 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const container = document.getElementById("tv-stations-container");
   let allStations = [];
 
+  // Haetaan TV-asemat Traficomin API:sta
   async function fetchTvStations() {
     try {
-      const url = `https://opendata.traficom.fi/api/v13/TVAsematiedot`;
+      const url = `https://corsproxy.io/?https://opendata.traficom.fi/api/v13/TVAsematiedot`;
       const response = await fetch(url);
       const data = await response.json();
       allStations = data.value || [];
@@ -18,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Kuntavalikkoon ne kunnat, joista löytyy lähetin (MUX)
   function populateMunicipalities(stations) {
     const municipalities = [...new Set(
       stations
@@ -28,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const validMunicipalities = [];
 
     municipalities.forEach(m => {
+      // Selvitetään kunnassa käytössä olevat MUXit
       const availableMuxes = [
         ...new Set(
           stations
@@ -36,11 +41,13 @@ document.addEventListener("DOMContentLoaded", () => {
         ),
       ];
 
+      // Tarkistetaan löytyykö MUXista tunnettuja kanavia
       const hasChannels = availableMuxes.some(mux => muxChannels[mux] && muxChannels[mux].length > 0);
 
       if (hasChannels) validMunicipalities.push(m);
     });
 
+    // Päivitetään dropdown-lista
     select.innerHTML = `<option value="">Valitse kunta</option>`;
     validMunicipalities.forEach(m => {
       const option = document.createElement("option");
@@ -50,6 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Reagoidaan kuntavalintaan
   select.addEventListener("change", () => {
     const selected = select.value;
     if (!selected) {
@@ -57,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    // Haetaan valitun kunnan käytössä olevat MUXit
     const availableMuxes = [
       ...new Set(
         allStations
@@ -69,9 +78,11 @@ document.addEventListener("DOMContentLoaded", () => {
     activateInfoBoxPositioning();
   });
 
+  // Luodaan ja näytetään kanavalista valittujen MUXien perusteella
   function renderTvChannels(muxList) {
     let channels = muxList.flatMap(mux => muxChannels[mux] || []);
 
+    // Järjestetään kanavat numeron perusteella
     channels = channels.sort((a, b) => {
       const numA = parseInt(a.number) || 9999;
       const numB = parseInt(b.number) || 9999;
@@ -111,6 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
   }
 
+  // Info-ikonien asettelu
   function activateInfoBoxPositioning() {
     const icons = document.querySelectorAll(".info-icon");
 

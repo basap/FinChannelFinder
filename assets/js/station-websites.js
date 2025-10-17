@@ -1,3 +1,5 @@
+// Radioasemien kotisivut syötetään manuaalisesti alla olevaan listaukseen
+// Mikäli asemalle ei ole syötetty tänne kotisivua, näkyy sen kohdalla sovelluksessa 'Ei kotisivuja'
 const stationWebsites = {
   "aitoiskelmä": "https://supla.fi/aitoiskelma",
   "ålandsradio": "https://alandsradio.ax",

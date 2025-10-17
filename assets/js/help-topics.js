@@ -1,3 +1,4 @@
+// Tietopankin aiheet ja vastaukset syötetään tänne
 window.helpTopics = [
   {
     question: "Perustiedot sovelluksesta",

@@ -1,3 +1,6 @@
+// Traficomin API palauttaa ainoastaan kanavaniput (Mux-B, Mux-C, Mux-E)
+// Tänne syötetään manuaalisesti televisiokanavat jokaisesta kanavanipusta
+// Tiedot tarkistettu Digitan sivuilta
 export const muxChannels = {
   "Mux-B": [
     { name: "Yle TV1", number: 1, logo: "assets/img/tv/yle-tv1.png", website: "https://areena.yle.fi/tv/ohjelmat/57-6Ave89X7L" },

@@ -1,3 +1,5 @@
+// Traficomin API palauttaa kuntien suomenkielisten nimien lisäksi myös ruotsinkieliset
+// Mustalle listalle lisätty ruotsinkieliset nimet, nämä eivät ilmesty dropdown valikkoon
 const municipalityBlacklist = [
   "Helsingfors",
   "Tammerfors",

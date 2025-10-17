@@ -1,3 +1,4 @@
+// JAVASCRIPT: Yleinen asettelu, radioasemat, tietopankki
 document.addEventListener('DOMContentLoaded', () => {
   const tabs = document.querySelectorAll('.tab');
   const sections = {
@@ -10,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const municipalitySelect = document.getElementById('municipality-select');
   const stationList = document.getElementById('station-list');
 
+  // Header-valikko
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       tabs.forEach(t => t.classList.remove('active'));
@@ -20,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Teeman valinta ja tallennus evästeisiin
   const savedTheme = getCookie('theme');
   const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
@@ -31,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setCookie('theme', newTheme, 365);
   });
 
+  // Vaihdetaan ikoni teeman perusteella
   function applyTheme(theme) {
     if (theme === 'dark') {
       document.body.classList.add('dark');
@@ -53,23 +57,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }, '');
   }
 
+  // Haetaan käyttäjän järjestelmän teema
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
     if (!getCookie('theme')) applyTheme(e.matches ? 'dark' : 'light');
   });
 
+  // Logon hakeminen
   function getStationLogo(stationName) {
     const fileName = stationName.toLowerCase().replace(/\s+/g, '') + '.png';
     return `assets/img/logos/${fileName}`;
   }
 
+  // Kuntalistauksen haku Traficomin avoimesta datasta
   async function populateMunicipalities() {
     try {
-      const url = `https://opendata.traficom.fi/api/v13/Radioasematiedot`;
+      const url = `https://corsproxy.io/?https://opendata.traficom.fi/api/v13/Radioasematiedot`;
       const response = await fetch(url);
       if (!response.ok) throw new Error(`Virheellinen vastaus (${response.status})`);
       const data = await response.json();
       const allStations = data.value || [];
 
+      // Kerätään kunnat, poistetaan blacklistillä olevat ruotsinkieliset nimet
       const municipalitiesSet = new Set(
         allStations
           .map(s => s.Municipality)
@@ -78,6 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const municipalities = Array.from(municipalitiesSet).sort();
 
+      // Päivitetään dropdown-lista
       municipalitySelect.innerHTML = `<option value="">Valitse kunta</option>`;
       municipalities.forEach(name => {
         const option = document.createElement("option");
@@ -92,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   populateMunicipalities();
 
+  // Radioasemien hakeminen kunnan perusteella
   municipalitySelect.addEventListener("change", async (e) => {
     const selected = e.target.value;
     if (!selected) return;
@@ -99,14 +109,17 @@ document.addEventListener('DOMContentLoaded', () => {
     stationList.innerHTML = `<p>Ladataan radioasemia...</p>`;
 
     try {
-      const url = `https://opendata.traficom.fi/api/v13/Radioasematiedot?$filter=Municipality%20eq%20'${encodeURIComponent(selected)}'`;
+      // Haetaan valitun kunnan asemmat API:sta
+      const url = `https://corsproxy.io/?https://opendata.traficom.fi/api/v13/Radioasematiedot?$filter=Municipality%20eq%20'${encodeURIComponent(selected)}'`;
       const response = await fetch(url);
       if (!response.ok) throw new Error(`Virheellinen vastaus (${response.status})`);
       const data = await response.json();
       let stations = data.value || [];
 
+      // Suodatetaan pois pienet taajuudet (alle 87.6 MHz)
       stations = stations.filter(s => (s.Frequency / 1_000_000) >= 87.6);
 
+      // Mahdolliset duplikaattien poisto
       const uniqueStations = [];
       const seen = new Set();
       stations.forEach(station => {
@@ -122,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
+      // Erotellaan tilapäiset ja pysyvät asemat. Pysyvälle asemalle API ei palauta aloituspäivää.
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
@@ -144,8 +158,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const permanentStations = uniqueStations.filter(s => s.StartingDate === null);
 
+      // Listan tyhjennys ennen uutta tulostusta
       stationList.innerHTML = "";
 
+        // Luodaan asemakortti: sisältää nimen, logon, taajuuden, kotisivunapin ja mahdollisen päättysmispäivän
         function createStationBox(station) {
         const frequencyMHz = (station.Frequency / 1_000_000).toFixed(1);
         const normalizedName = station.StationName.toLowerCase().replace(/\s+/g, '');
@@ -184,6 +200,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return div;
         }
 
+      // Osioidaan pysyvät ja tilapäiset radioasemat
       function renderSection(title, stations) {
         if (stations.length === 0) return;
         const group = document.createElement("div");
@@ -207,12 +224,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Tietopankin generointi
   function populateHelpTopics() {
     const helpList = document.getElementById('help-list');
     if (!helpList || !window.helpTopics) return;
 
     helpList.innerHTML = "";
 
+    // Jokaisesta aiheesta oma avautuva laatikko
     helpTopics.forEach(topic => {
       const topicDiv = document.createElement("div");
       topicDiv.className = "help-topic";
@@ -225,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
       answerDiv.className = "help-answer";
       answerDiv.innerHTML = topic.answer;
 
+      // Klikkaus avaa tai sulkee laatikon
       questionDiv.addEventListener("click", () => {
         topicDiv.classList.toggle("active");
       });
@@ -238,6 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
   populateHelpTopics();
 });
 
+// Mobiilivalikon (hampurilaisvalikko) avaaminen/sulkeminen
 document.getElementById('menu-toggle').addEventListener('click', () => {
   document.getElementById('header-menu').classList.toggle('open');
 });
