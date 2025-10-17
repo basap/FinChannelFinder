@@ -1,10 +1,10 @@
 window.helpTopics = [
   {
     question: "Perustiedot sovelluksesta",
-    answer: `Tämä sovellus listaa kaikki tällä hetkellä Suomessa toimivat radioasemat kunnittain. Data haetaan Traficomin avoimen datan lähteestä. Mikäli asemalla on voimassa oleva toimilupa, sen pitäisi listautua tälle sivustolle. Samaan tyyliin mikäli radioaseman toimilupa on päättynyt, se poistuu automaattisesti myös tästä sovelluksesta.
-    Sovellus listaa ainoastaan FM-radioasemat. Keskiaalto- (AM) ja lyhytaaltoasemia ei listata, sillä näiden käyttö Suomessa on hyvin minimaalista.
+    answer: `Tämä sovellus listaa kaikki tällä hetkellä Suomessa toimivat radioasemat sekä antennitelevision kanavat kunnittain. Data haetaan Traficomin avoimen datan lähteestä. Mikäli asemalla on voimassa oleva toimilupa, sen pitäisi listautua tälle sivustolle. Samaan tyyliin mikäli radioaseman toimilupa on päättynyt, se poistuu automaattisesti myös tästä sovelluksesta.
+    Radioasemista sovellus listaa ainoastaan FM-radioasemat. Keskiaalto- (AM) ja lyhytaaltoasemia ei listata, sillä näiden käyttö Suomessa on hyvin minimaalista.
     <br><br>
-    Pysyvien radioasemien logot ja kotisivujen linkit on syötetty manuaalisesti sovellukseen.
+    Logot ja kotisivujen linkit on syötetty manuaalisesti sovellukseen.
     Uusilta sekä väliaikaisesti toimivilta radioasemilta nämä voivat mahdollisesti puuttua.
     Myös mahdolliset brändiuudistukset eivät päivity automaattisesti tähän sovellukseen.
     Logot ja linkit ovat viimeksi päivitetty 6.10.2025, jolloin kaikille (myös tilapäisille) radioasemille nämä tiedot syötettiin, mikäli sellaisia oli saatavilla.
@@ -51,5 +51,10 @@ window.helpTopics = [
   {
     question: `Radioaseman taajuudella ei kuulu mitään`,
     answer: `Hakukone listaa asemat myönnettyjen toimilupien perusteella, mutta tämä ei takaa sitä, että asemalla välttämättä olisi lähetys käynnissä. Esimerkiksi raviradiot harvemmin lähettävät ohjelmaa ravien ulkopuolella. Kyseessä voi olla myös tilapäinen häiriö aseman lähetysvirrassa. Teoriassa saattaa olla myös mahdollisuus siihen, että taajuus on syötetty väärin Traficomin järjestelmään, mutta tämä on hyvin epätodennäköinen skenaario, jos ei mahdoton.`
+  },
+  {
+    question: `Televisiokanava ei näy, vaikka se löytyy listasta`,
+    answer: `Tämä ilmiö voi toteutua esimerkiksi pinta-alaltaan suurimpien kuntien kohdalla. Esimerkiksi Rovaniemen kohdalla listaus pitää paikkansa ainakin ydinkeskustassa, mutta syrjemmillä seuduilla kanavia voi olla saatavilla rajallisemmin. Rovaniemen pohjoisosiin signaali voi tulla esimerkiksi Kittilästä, missä on rajallisempi tarjonta.
+    <br><br>Tähän ei ainakaan toistaiseksi ole saatavilla mitään ratkaisua, joten kanavalistaus on tässä tapauksessa hieman epätäydellinen.`
   }
 ];

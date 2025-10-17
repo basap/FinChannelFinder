@@ -12,13 +12,23 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 0.5rem 1rem;
+  flex-wrap: wrap;
 }
 
 .header-right {
   display: flex;
   align-items: center;
   gap: 1.5rem;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: inherit;
 }
 
 .tabs {
@@ -57,15 +67,6 @@ main {
   padding: 2rem;
 }
 
-.logo {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 1rem;
-  background-color: #ddd;
-  border-radius: 50%;
-  display: inline-block;
-}
-
 .dropdown-container {
   margin-bottom: 1.5rem;
   text-align: center;
@@ -89,15 +90,42 @@ main {
   gap: 2rem;
 }
 
-@media (max-width: 900px) {
-  #station-list {
-    grid-template-columns: repeat(2, 1fr);
+@media (max-width: 700px) {
+  .menu-toggle {
+    display: block;
   }
-}
 
-@media (max-width: 600px) {
-  #station-list {
-    grid-template-columns: 1fr;
+  #header-menu {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    margin-top: 0.5rem;
+
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: max-height 0.4s ease, opacity 0.4s ease;
+  }
+
+  #header-menu.open {
+    opacity: 1;
+    max-height: 400px;
+    pointer-events: auto;
+  }
+
+  .tabs {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .tab {
+    padding: 0.5rem 0;
+  }
+
+  #theme-toggle {
+    align-self: center;
   }
 }
 
@@ -152,15 +180,6 @@ main {
 .station-info .station-frequency {
   font-size: 1rem;
   font-weight: normal;
-}
-
-.station-info h3 {
-  margin: 0 0 0.3rem 0;
-}
-
-.station-info p {
-  margin: 0 0 0.5rem 0;
-  font-weight: bold;
 }
 
 .station-info button {
@@ -339,6 +358,24 @@ a:visited {
   color: #0066cc;
 }
 
+@media (max-width: 600px) {
+  .station-info > div {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .station-info .btn-active,
+  .station-info .btn-disabled,
+  .station-info .btn-ending {
+    width: 100%;
+  }
+
+  .station-info .btn-ending {
+    margin-top: 0.4rem;
+    text-align: center;
+  }
+}
+
 #ohjeet {
   display: none;
 }
@@ -356,7 +393,6 @@ body.dark .tab.active {
   border-bottom: 2px solid #e0e0e0;
 }
 
-body.dark .box,
 body.dark .station-box {
   background: #1f1f1f;
   color: #fff;

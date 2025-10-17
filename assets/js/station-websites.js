@@ -92,5 +92,6 @@ const stationWebsites = {
   "ylesamiradio": "https://areena.yle.fi/podcastit/ohjelmat/57-bN8gjw7AY",
   "ylex": "https://areena.yle.fi/podcastit/ohjelmat/57-JAprnp7W2",
   "ylex3m": "https://areena.yle.fi/podcastit/ohjelmat/57-md5vJP6a2",
-  "jouluradio2025": "https://jouluradio.fi"
+  "jouluradio2025": "https://jouluradio.fi",
+  "alfafm": "https://alfamedia.fi"
 };

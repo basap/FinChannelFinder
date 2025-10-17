@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function populateMunicipalities() {
     try {
-      const url = `https://corsproxy.io/?https://opendata.traficom.fi/api/v13/Radioasematiedot`;
+      const url = `https://opendata.traficom.fi/api/v13/Radioasematiedot`;
       const response = await fetch(url);
       if (!response.ok) throw new Error(`Virheellinen vastaus (${response.status})`);
       const data = await response.json();
@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     stationList.innerHTML = `<p>Ladataan radioasemia...</p>`;
 
     try {
-      const url = `https://corsproxy.io/?https://opendata.traficom.fi/api/v13/Radioasematiedot?$filter=Municipality%20eq%20'${encodeURIComponent(selected)}'`;
+      const url = `https://opendata.traficom.fi/api/v13/Radioasematiedot?$filter=Municipality%20eq%20'${encodeURIComponent(selected)}'`;
       const response = await fetch(url);
       if (!response.ok) throw new Error(`Virheellinen vastaus (${response.status})`);
       const data = await response.json();
@@ -236,4 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   populateHelpTopics();
+});
+
+document.getElementById('menu-toggle').addEventListener('click', () => {
+  document.getElementById('header-menu').classList.toggle('open');
 });

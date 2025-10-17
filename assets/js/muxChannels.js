@@ -22,7 +22,7 @@ export const muxChannels = {
     { name: "Jim", number: 9, logo: "assets/img/tv/jim.png", website: "https://ruutu.fi/tv/jim" },
     { name: "MTV Ava", number: 13, logo: "assets/img/tv/ava.png", website: "https://mtv.fi" },
     { name: "Hero", number: 14, logo: "assets/img/tv/hero.png", website: "https://ruutu.fi/channel/20" },
-    { name: "Alfa", number: 16, logo: "assets/img/tv/alfa.png", website: "https://permanto.fi" },
+    { name: "Alfa", number: 16, logo: "assets/img/tv/alfa.png", website: "https://permanto.fi", info: `Kanava lähettää ohjelmaa antenniverkossa päivittäin klo 19.30-21.30.` },
     { name: "Iskuri.net", number: 18, logo: "assets/img/tv/iskuri.png", website: "https://iskuri.net" },
     { name: "VeikkausTV", number: 19, logo: "assets/img/tv/veikkaustv.png", website: "https://veikkaus.fi/fi/veikkaustv" },
     { name: "One Way TV", number: 34, logo: "assets/img/tv/oneway.png", website: "https://oneway.tv/fi" }
