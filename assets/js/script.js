@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Kuntalistauksen haku Traficomin avoimesta datasta
   async function populateMunicipalities() {
     try {
-      const url = `https://corsproxy.io/?https://opendata.traficom.fi/api/v13/Radioasematiedot`;
+      const url = `https://proxy.corsfix.com/?https://opendata.traficom.fi/api/v13/Radioasematiedot`;
       const response = await fetch(url);
       if (!response.ok) throw new Error(`Virheellinen vastaus (${response.status})`);
       const data = await response.json();
@@ -110,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     try {
       // Haetaan valitun kunnan asemmat API:sta
-      const url = `https://corsproxy.io/?https://opendata.traficom.fi/api/v13/Radioasematiedot?$filter=Municipality%20eq%20'${encodeURIComponent(selected)}'`;
+      const url = `https://proxy.corsfix.com/?https://opendata.traficom.fi/api/v13/Radioasematiedot?$filter=Municipality%20eq%20'${encodeURIComponent(selected)}'`;
       const response = await fetch(url);
       if (!response.ok) throw new Error(`Virheellinen vastaus (${response.status})`);
       const data = await response.json();
