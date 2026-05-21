@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Haetaan TV-asemat Traficomin API:sta
   async function fetchTvStations() {
     try {
-      const url = `https://corsproxy.io/?https://opendata.traficom.fi/api/v13/TVAsematiedot`;
+      const url = `https://proxy.corsfix.com/?https://opendata.traficom.fi/api/v13/TVAsematiedot`;
       const response = await fetch(url);
       const data = await response.json();
       allStations = data.value || [];
